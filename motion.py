@@ -39,7 +39,7 @@ try:
             continue
         tx += x
         ty += y
-        print(time.strftime('%x %X'),"::","Relative: x {:03d} y {:03d} | Absolute: x {:03d} y {:03d}".format(x, y, tx, ty))
+        print(time.strftime('%x %X'),"::","Relative x,y : ({:03d},{:03d}) | Absolute x,y : ({:03d},{:03d})".format(x, y, tx, ty))
         time.sleep(0.01)
 except KeyboardInterrupt:
     pass
