@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import time
 import argparse
+from math import sqrt
 from pmw3901 import PMW3901, PAA5100, BG_CS_FRONT_BCM, BG_CS_BACK_BCM
 
 print("""motion.py - Detect flow/motion in front of the PMW3901 sensor.
@@ -39,7 +40,9 @@ try:
             continue
         tx += x
         ty += y
-        print(time.strftime('%x %X'),"::","Relative x,y : ({:03d},{:03d}) | Absolute x,y : ({:03d},{:03d})".format(x, y, tx, ty))
+        dist = sqrt(abs((tx*tx) - (ty*ty)))
+        print(time.strftime('%x %X'),"::","Relative x,y : ({:03d},{:03d}) | Absolute x,y : ({:03d},{:03d})".format(x, y, tx, ty), end=" ")
+        print("Distance : %.2f" % dist)
         time.sleep(0.01)
 except KeyboardInterrupt:
     pass
