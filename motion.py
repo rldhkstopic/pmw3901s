@@ -10,7 +10,7 @@ Press Ctrl+C to exit!
 """)
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--board', type=str,
+parser.add_argument('--board', type=str, default='pmw3901',
                     choices=['pmw3901', 'paa5100'],
                     required=True,
                     help='Breakout type.')
