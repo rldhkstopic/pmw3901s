@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 import time
 import argparse
+from math import sqrt
+from datetime import datetime
 from pmw3901 import PMW3901, PAA5100, BG_CS_FRONT_BCM, BG_CS_BACK_BCM
 
 print("""motion.py - Detect flow/motion in front of the PMW3901 sensor.
@@ -9,9 +11,8 @@ Press Ctrl+C to exit!
 """)
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--board', type=str,
+parser.add_argument('--board', type=str, default='pmw3901',
                     choices=['pmw3901', 'paa5100'],
-                    required=True,
                     help='Breakout type.')
 parser.add_argument('--rotation', type=int,
                     default=0, choices=[0, 90, 180, 270],
@@ -21,7 +22,7 @@ parser.add_argument('--spi-slot', type=str,
                     help='Breakout Garden SPI slot.')
 
 args = parser.parse_args()
-
+args.board == 'pmw3901'
 # Pick the right class for the specified breakout
 SensorClass = PMW3901 if args.board == 'pmw3901' else PAA5100
 
@@ -35,11 +36,15 @@ try:
     while True:
         try:
             x, y = flo.get_motion()
+            if x > 100:x=0
+            if y > 100:y=0
         except RuntimeError:
             continue
         tx += x
         ty += y
-        print("Relative: x {:03d} y {:03d} | Absolute: x {:03d} y {:03d}".format(x, y, tx, ty))
+        dist = sqrt(abs((tx*tx) - (ty*ty)))
+        print(datetime.now().strftime('%H:%M:%S.%f'),"|","Relative x,y | ({:03d},{:03d}) | Absolute x,y | ({:03d},{:03d})".format(x, y, tx, ty), end=" ")
+        print("| Distance : %.2f" % dist)
         time.sleep(0.01)
 except KeyboardInterrupt:
     pass
