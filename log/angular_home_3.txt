@@ -1,6 +1,0 @@
-motion.py - Detect flow/motion in front of the PMW3901 sensor.
-
-Press Ctrl+C to exit!
-
-09/16/22 10:50:45 :: Relative: x 000 y -01 | Absolute: x 000 y -01
-09/16/22 10:50:45 :: Relative: x 000 y 001 | Absolute: x 000 y 000
